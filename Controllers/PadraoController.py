@@ -17,35 +17,35 @@ registros_alunos = {
         "Matrícula": 1,
         "Nome": "João Silva",
         "Idade": 15,
-        "Classe": "9º ano - Ensino Fundamental",
+        "Classe": "9º Ano - Ensino Fundamental",
         "Notas": {"Matemática": 85, "Língua Portuguesa": 78, "Ciências": 92, "História": 93}
     },
     2: {
         "Matrícula": 2,
         "Nome": "Maria Oliveira",
         "Idade": 14,
-        "Classe": "8º ano - Ensino Fundamental",
+        "Classe": "8º Ano - Ensino Fundamental",
         "Notas": {"Matemática": 90, "Língua Portuguesa": 82, "Ciências": 88, "História": 84}
     },
     3: {
         "Matrícula": 3,
         "Nome": "Carlos Santos",
         "Idade": 16,
-        "Classe": "9º ano - Ensino Fundamental",
+        "Classe": "9º Ano - Ensino Fundamental",
         "Notas": {"Matemática": 78, "Língua Portuguesa": 80, "Ciências": 75, "História": 78}
     },
     4: {
         "Matrícula": 4,
         "Nome": "Ana Pereira",
         "Idade": 15,
-        "Classe": "9º ano - Ensino Fundamental",
+        "Classe": "9º Ano - Ensino Fundamental",
         "Notas": {"Matemática": 92, "Língua Portuguesa": 85, "Ciências": 90, "História": 88}
     },
     5: {
         "Matrícula": 5,
         "Nome": "Pedro Costa",
         "Idade": 14,
-        "Classe": "8º ano - Ensino Fundamental",
+        "Classe": "8º Ano - Ensino Fundamental",
         "Notas": {"Matemática": 88, "Língua Portuguesa": 79, "Ciências": 84, "História": 80}
     }
 }
@@ -60,8 +60,17 @@ materias = ['Língua Portuguesa', 'Matemática','Ciências','História','Geograf
 
 materias_p = ['Todas'] + materias
 
+# Função para gerar nova matrícula
+def gerar_nova_matricula():
+    if registros_alunos:
+        nova_matricula = max(registros_alunos.keys()) + 1
+    else:
+        nova_matricula = 1
+    return nova_matricula
+
 #  Função para adicionar uma novo Aluno
-def adicionar_aluno(Matricula, Nome, Idade, Classe, Notas):
+def adicionar_aluno(Nome, Idade, Classe, Notas):
+    Matricula = gerar_nova_matricula()
     novo_aluno = {
         "Matrícula": Matricula,
         "Nome": Nome,
@@ -147,3 +156,39 @@ def adicionar_notas(Matricula, Materia, Nota):
     aluno["Notas"][Materia] = Nota  # Adiciona ou atualiza a nota
     ut.Sucesso("", "Nota adicionada com sucesso!")
     return True
+
+# Função para alterar dados de um aluno 
+def alterar_aluno(Matricula, Nome=None, Idade=None, Classe=None, Notas=None):
+    if Matricula not in registros_alunos:
+        ut.Erro("", "Matrícula não encontrada.")
+        return False
+    
+    aluno = registros_alunos[Matricula]
+    
+    if Nome:
+        aluno["Nome"] = Nome
+    if Idade:
+        aluno["Idade"] = Idade
+    if Classe:
+        aluno["Classe"] = Classe
+    if Notas:
+        aluno["Notas"].update(Notas)  # Atualiza as notas existentes ou adiciona novas
+    
+    ut.Sucesso("", "Dados do aluno atualizados com sucesso!")
+    return True
+
+def deletar_registro(Matricula: int) -> bool:
+    try:
+        st.write(Matricula)
+        matricula_int = int(Matricula)  # Convertendo a matrícula para inteiro
+    except ValueError:
+        ut.Erro("", "A matrícula deve ser um número inteiro.")
+        return False
+    
+    if matricula_int in registros_alunos:
+        del registros_alunos[matricula_int]
+        return True
+    
+    if matricula_int not in registros_alunos:
+        # ut.Sucesso('', f'Matrícula "{Matricula}" deletada com sucesso') 
+        return True
