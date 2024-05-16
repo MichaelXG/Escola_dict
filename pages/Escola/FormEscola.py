@@ -124,14 +124,22 @@ def Form_Escola():
         get_record_user = get_record_user_atual.first_registro()
 
     if action_escola == 6:  # Prior
-        ut.fn_spinner_3('Carregando registro anterior...')
-        get_record_user = get_record_user_atual.registro_prior(st.session_state.index)
+        if st.session_state.index > 0:  # Verifica se não está no primeiro registro
+            ut.fn_spinner_3('Carregando registro anterior...')
+            get_record_user = get_record_user_atual.registro_prior(st.session_state.index)
+        else:
+            ut.Alerta('', 'Já está no primeiro registro.')
+            get_record_user = get_record_user_atual.first_registro()  # Mantém o primeiro registro na tela
+
 
     if action_escola == 7:  # Next
         ut.fn_spinner_3('Carregando próximo registro...')
         if st.session_state.index < p_max_value:
-             get_record_user = get_record_user_atual.next_registro(st.session_state.index)
-
+            get_record_user = get_record_user_atual.next_registro(st.session_state.index)
+        else:
+            ut.Alerta('', 'Já está no último registro.')
+            get_record_user = get_record_user_atual.last_registro() 
+             
     if action_escola == 8:  # Último registro
         ut.fn_spinner_3('Carregando último registro...')
         get_record_user = get_record_user_atual.last_registro()
