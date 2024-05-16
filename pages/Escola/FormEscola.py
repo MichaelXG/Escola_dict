@@ -42,7 +42,7 @@ def Form_Escola():
     if 'Classe' not in st.session_state:
         st.session_state.Classe = None
 
-    ut.Divisor('Adicionar Aluno', 'person-fill', 'rgb(20,80,90)', 'key_Aluno1')
+    ut.Divisor('Adicionar / Alterar Alunos', 'person-fill', 'rgb(20,80,90)', 'key_Aluno1')
 
     df_filtrado_qtd = listar_alunos(None, None, None, 'Todas', 0) 
     p_max_value = len(df_filtrado_qtd) -1
