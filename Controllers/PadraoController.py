@@ -68,16 +68,27 @@ def gerar_nova_matricula():
         nova_matricula = 1
     return nova_matricula
 
-# Função para estilizar o DataFrame
 def style_df_notas(val):
-    if isinstance(val, str):
-        return ''  # Se for uma string, não aplique estilo
-    color = 'red' if float(val) < 60 else 'black'
-    return f'color: {color}'
+    try:
+        val = float(val)
+        if val < 60:
+            color = 'red'
+        else:
+            color = 'green'
+        return f'color: {color}'
+    except ValueError:
+        return ''  # Se não puder converter para float, não aplica estiloo
+
+# Função para estilizar linhas alternadas
+def zebra_style(row):
+    return ['background-color: #f2f2f2' if row.name % 2 == 0 else '' for _ in row]
 
 # Função para estilizar o DataFrame
 def style_df(df):
-    styled_df = df.style.applymap(style_df_notas, subset=pd.IndexSlice[:, [col for col in df.columns if col not in ['Matrícula', 'Nome', 'Idade', 'Classe']]])
+    # Aplicar estilo apenas nas colunas de notas
+    notas_cols = [col for col in df.columns if col not in ['Matrícula', 'Nome', 'Idade', 'Classe']]
+    styled_df = df.style.applymap(style_df_notas, subset=pd.IndexSlice[:, notas_cols])
+    styled_df = styled_df.apply(zebra_style, axis=1)
     return styled_df
 
 #  Função para adicionar uma novo Aluno
@@ -166,7 +177,7 @@ def adicionar_notas(Matricula, Materia, Nota):
     
     aluno = registros_alunos[matricula_int]
     aluno["Notas"][Materia] = Nota  # Adiciona ou atualiza a nota
-    ut.Sucesso("", "Nota adicionada com sucesso!")
+    # ut.Sucesso("", "Nota adicionada com sucesso!")
     return True
 
 # Função para alterar dados de um aluno 

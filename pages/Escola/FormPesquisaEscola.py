@@ -53,7 +53,6 @@ def Form_PesquisaEscola():
             st.write('') 
             
         if form_submit_button_peqsuisar:
-        
             # Chama a função listar_Alunos com os filtros selecionados
             df_filtrado = listar_alunos(Matricula, Nome, Classe, Materia, Desempenho)
             # Mostra as Alunos filtradas em um DataFrame do Pandas

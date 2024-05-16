@@ -58,9 +58,10 @@ def Form_Lancar_Notas():
 
             # Mostra as tarefas filtradas em um DataFrame do Pandas
             if not df_filtrado.empty:
-                # st.dataframe(df_filtrado, use_container_width=True)
+                # Obter o DataFrame estilizado
+                styled_df = style_df(df_filtrado)
                 # Exibir o DataFrame estilizado como HTML
-                st.write(df_filtrado.to_html(), unsafe_allow_html=True)
+                st.write(styled_df.to_html(), unsafe_allow_html=True)
             else:
                 st.write("Não há Notas laçadas.")   
        
@@ -68,10 +69,8 @@ def Form_Lancar_Notas():
         # Após selecionar o aluno, separar a matrícula do nome
         Matricula, Nome = st.session_state.Matricula_Aluno.split(" - ", 1)
         
-        st.write('Matricula', Matricula)
-        
         if adicionar_notas(Matricula, st.session_state.Materia, st.session_state.Nota):
-            ut.Sucesso("", f"Nota de {st.session_state.Materia} atualizada para {st.session_state.Nome} com sucesso!")
+            ut.Sucesso("", f"Nota de {st.session_state.Materia} atualizada para {Nome} com sucesso!")
         else:
             ut.Informacao("", "Aluno inválido.")
         
