@@ -32,7 +32,7 @@ registros_alunos = {
         "Nome": "Carlos Santos",
         "Idade": 16,
         "Classe": "9º Ano - Ensino Fundamental",
-        "Notas": {"Matemática": 78, "Língua Portuguesa": 80, "Ciências": 75, "História": 78}
+        "Notas": {"Matemática": 59, "Língua Portuguesa": 80, "Ciências": 75, "História": 78}
     },
     4: {
         "Matrícula": 4,
@@ -67,6 +67,18 @@ def gerar_nova_matricula():
     else:
         nova_matricula = 1
     return nova_matricula
+
+# Função para estilizar o DataFrame
+def style_df_notas(val):
+    if isinstance(val, str):
+        return ''  # Se for uma string, não aplique estilo
+    color = 'red' if float(val) < 60 else 'black'
+    return f'color: {color}'
+
+# Função para estilizar o DataFrame
+def style_df(df):
+    styled_df = df.style.applymap(style_df_notas, subset=pd.IndexSlice[:, [col for col in df.columns if col not in ['Matrícula', 'Nome', 'Idade', 'Classe']]])
+    return styled_df
 
 #  Função para adicionar uma novo Aluno
 def adicionar_aluno(Nome, Idade, Classe, Notas):

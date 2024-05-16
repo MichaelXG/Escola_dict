@@ -131,7 +131,6 @@ def Form_Escola():
             ut.Alerta('', 'Já está no primeiro registro.')
             get_record_user = get_record_user_atual.first_registro()  # Mantém o primeiro registro na tela
 
-
     if action_escola == 7:  # Next
         ut.fn_spinner_3('Carregando próximo registro...')
         if st.session_state.index < p_max_value:

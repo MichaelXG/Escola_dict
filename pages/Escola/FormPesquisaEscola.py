@@ -10,7 +10,7 @@ def Form_PesquisaEscola():
     with st.form(key = 'form_Alunos_pesquisar', clear_on_submit = False):
         row_0_col0, row_0_col1, row_0_col2, row_0_col3, row_0_col4 = st.columns([1.5, 3, 3, 3, 2])   
         row_1_col1, row_1_col2 = st.columns([8, 0.01])  
-        row_2_col1, row_2_col2, row_2_col3, row_2_col4, row_2_col5= st.columns([2, 2, 1, 2, 2]) 
+        row_2_col1, row_2_col2, row_2_col3, row_2_col4, row_2_col5= st.columns([3, 3, 2, 3, 3]) 
         
         df_filtrado_qtd = listar_alunos(None, None, None, 'Todas', 0) 
         p_max_value = len(df_filtrado_qtd)
@@ -35,7 +35,8 @@ def Form_PesquisaEscola():
             sac.menu([sac.MenuItem(type='divider')], color='rgb(20,80,90)', open_all=False, return_index=False, index=None, key='key_divisor')
         with row_1_col2:   
             st.write('')
-
+       
+        # Linha 02
         with row_2_col1:   
             st.write('')
         
@@ -57,7 +58,10 @@ def Form_PesquisaEscola():
             df_filtrado = listar_alunos(Matricula, Nome, Classe, Materia, Desempenho)
             # Mostra as Alunos filtradas em um DataFrame do Pandas
             if not df_filtrado.empty:
-                st.dataframe(df_filtrado, use_container_width=True)
+                # Obter o DataFrame estilizado
+                styled_df = style_df(df_filtrado)
+                # Exibir o DataFrame estilizado como HTML
+                st.write(styled_df.to_html(), unsafe_allow_html=True)
             else:
                 st.write("Não há Alunos correspondentes aos filtros selecionados.")        
          

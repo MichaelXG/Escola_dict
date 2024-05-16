@@ -9,7 +9,8 @@ def Form_Lancar_Notas():
     ut.Divisor('Lançar Notas dos Alunos', 'graph-up-arrow', 'rgb(20,80,90)', 'LancarNotas01')
     
     with st.container(border=True):
-        row_0_col1, row_0_col2, row_0_col3= st.columns([3, 3, 2]) 
+        row_0_col1, row_0_col2, row_0_col3 = st.columns([3, 3, 2]) 
+        row_2_col1, row_2_col2, row_2_col3, row_2_col4, row_2_col5= st.columns([3, 3, 2, 3, 3])
         
         df_filtrado_qtd = listar_alunos(None, None, None, 'Todas', 0) 
         
@@ -30,14 +31,24 @@ def Form_Lancar_Notas():
             st.session_state.Nota = st.number_input("Nota", step= 1, min_value= 0, max_value=100) 
             if not st.session_state.Nota:
                 st.error('O campo "Nota" é Obrigatorio.')
-               
-        with row_0_col2:
-             selected_lancar_nota = sac.buttons([
+            
+         # Linha 02
+        with row_2_col1:   
+            st.write('')
+        
+        with row_2_col2:
+           st.write('')   
+            
+        with row_2_col3: 
+            selected_lancar_nota = sac.buttons([
                  sac.ButtonsItem(label='Salvar Nota', icon='clipboard-check', color='#25C3B0'),
                  ], label=' . ', align='center', radius='lg', color='rgb(20,80,90)', index=None)
+            
+        with row_2_col4: 
+            st.write('') 
         
-        with row_0_col3:
-            st.write("")
+        with row_2_col5: 
+            st.write('') 
                     
         ut.Divisor('Listar as Notas Lançadas', 'clipboard2-data', 'rgb(20,80,90)', 'LancarNotas02')
         
@@ -47,7 +58,9 @@ def Form_Lancar_Notas():
 
             # Mostra as tarefas filtradas em um DataFrame do Pandas
             if not df_filtrado.empty:
-                st.dataframe(df_filtrado, use_container_width=True)
+                # st.dataframe(df_filtrado, use_container_width=True)
+                # Exibir o DataFrame estilizado como HTML
+                st.write(df_filtrado.to_html(), unsafe_allow_html=True)
             else:
                 st.write("Não há Notas laçadas.")   
        
