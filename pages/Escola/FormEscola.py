@@ -236,7 +236,7 @@ def Form_Escola():
                         get_record_user = get_record_user_atual.refresh(st.session_state.index)
                         
                         reset_session_state()
-                        ut.Sucesso('', f'Matrícula "{get_record_user['Matrícula']} - {get_record_user['Nome']}",  alterado com sucesso')
+                        ut.Sucesso('', f'Matrícula "{st.session_state.Matricula} - {st.session_state.Nome}",  alterado com sucesso')
                         st.rerun()
                     else:
                         ut.Alerta('', 'Parametros para Alterar um Aluno incompleto') 
